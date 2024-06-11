@@ -32,7 +32,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        //return view('admin.projects.create');
+
+        $types = Type::all();
+
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
@@ -46,7 +50,9 @@ class ProjectController extends Controller
         $request->validate([
             'name' => 'required|min:10|max:300|unique:projects,name',
             'client_name' => 'nullable|min:10',
-            'summary' => 'nullable|min:15'
+            'summary' => 'nullable|min:15',
+            'cover_image' => 'nullable|image|max:256',
+            'type_id' => 'nullable|exists:types,id'
         ]);
 
 
@@ -95,7 +101,11 @@ class ProjectController extends Controller
     {
         //dd($project);
 
-        return view('admin.projects.edit', compact('project'));
+        //return view('admin.projects.edit', compact('project'));
+
+        $types = Type::all();
+
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -116,7 +126,9 @@ class ProjectController extends Controller
                 Rule::unique('projects')->ignore($project)
             ],
             'client_name' => 'nullable|min:10',
-            'summary' => 'nullable|min:15'
+            'summary' => 'nullable|min:15',
+            'cover_image' => 'nullable|image|max:256',
+            'type_id' => 'nullable|exists:types,id'
         ]);
 
         $formData = $request->all();
@@ -138,7 +150,7 @@ class ProjectController extends Controller
         //dd($project);
         //dd($formData);
         
-        return redirect ()->route('admin.projects.show', ['project' => $project->id]);
+        return redirect ()->route('admin.projects.show', ['project' => $project->slug]);
     }
 
     /**

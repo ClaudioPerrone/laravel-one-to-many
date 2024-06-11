@@ -11,6 +11,10 @@
         <h3><strong>Slug: </strong> {{ $project->slug }}</h3>
     </div>
 
+    <div>
+        <strong>Type</strong>: {{ $project->type ? $project->type->name : 'none' }}
+    </div>
+
     @if ($project->client_name)
         <div>
             <h3><strong>Client name: </strong> {{ $project->client_name ? $project->client_name : 'client name not found'}}</h3>
@@ -20,6 +24,8 @@
 {{--<div>
         <h3><strong>Client name: </strong> {{ $project->client_name ? $project->client_name : 'client name not found'}}</h3>
     </div> --}}
+
+    
 
     <div>
         <h3><strong>Summary:</strong></h3>
